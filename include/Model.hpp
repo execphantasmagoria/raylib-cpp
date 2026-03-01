@@ -58,9 +58,14 @@ public:
         other.meshes = nullptr;
         other.materials = nullptr;
         other.meshMaterial = nullptr;
-        other.boneCount = 0;
-        other.bones = nullptr;
-        other.bindPose = nullptr;
+
+        /*
+        The Animation Data is now stored within a separate struct called
+        `ModelSkeleton`. The changes below reflect this update.
+        */
+        other.skeleton.boneCount = 0;
+        other.skeleton.bones = nullptr;
+        other.skeleton.bindPose = nullptr;
     }
 
     GETTERSETTER(::Matrix, Transform, transform)
@@ -69,9 +74,9 @@ public:
     GETTERSETTER(::Mesh*, Meshes, meshes)
     GETTERSETTER(::Material*, Materials, materials)
     GETTERSETTER(int*, MeshMaterial, meshMaterial)
-    GETTERSETTER(int, BoneCount, boneCount)
-    GETTERSETTER(::BoneInfo*, Bones, bones)
-    GETTERSETTER(::Transform*, BindPose, bindPose)
+    GETTERSETTER(int, BoneCount, skeleton.boneCount)
+    GETTERSETTER(::BoneInfo*, Bones, skeleton.bones)
+    GETTERSETTER(::Transform*, BindPose, skeleton.bindPose)
 
     Model& operator=(const ::Model& model) {
         set(model);
@@ -93,9 +98,9 @@ public:
         other.meshes = nullptr;
         other.materials = nullptr;
         other.meshMaterial = nullptr;
-        other.boneCount = 0;
-        other.bones = nullptr;
-        other.bindPose = nullptr;
+        other.skeleton.boneCount = 0;
+        other.skeleton.bones = nullptr;
+        other.skeleton.bindPose = nullptr;
 
         return *this;
     }
@@ -240,9 +245,9 @@ protected:
         materials = model.materials;
         meshMaterial = model.meshMaterial;
 
-        boneCount = model.boneCount;
-        bones = model.bones;
-        bindPose = model.bindPose;
+        skeleton.boneCount = model.skeleton.boneCount;
+        skeleton.bones = model.skeleton.bones;
+        skeleton.bindPose = model.skeleton.bindPose;
     }
 };
 
