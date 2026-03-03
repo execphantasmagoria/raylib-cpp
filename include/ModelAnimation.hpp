@@ -26,7 +26,8 @@ public:
         other.keyframePoses = nullptr;
     }
 
-    ~ModelAnimation() { Unload(); }
+    // TODO: Implement a way to unload all animations at once, as the current Unload() only unloads one animation.
+    ~ModelAnimation() { Unload(1); }
 
     /**
      * Load model animations from file
@@ -57,7 +58,7 @@ public:
             return *this;
         }
 
-        Unload();
+        Unload(1);
         set(other);
 
         other.boneCount = 0;
@@ -70,7 +71,7 @@ public:
     /**
      * Unload animation data
      */
-    void Unload() { ::UnloadModelAnimation(*this); }
+    void Unload(int animCount) { ::UnloadModelAnimation(this, animCount); }
 
     /**
      * Update model animation pose
