@@ -71,7 +71,7 @@ public:
     /**
      * Unload animation data
      */
-    void Unload(int animCount) { ::UnloadModelAnimation(this, animCount); }
+    void Unload(int animCount) { ::UnloadModelAnimations(this, animCount); }
 
     /**
      * Update model animation pose
@@ -84,8 +84,8 @@ public:
     /**
      * Update model animation mesh bone matrices (GPU skinning)
      */
-    ModelAnimation& UpdateBones(const ::Model& animA, float frameA, const ::Model& animB, float frameB, float blend) {
-        ::UpdateModelAnimationEx(*this, animA, frameA, animB, frameB, blend);
+    ModelAnimation& UpdateBones(const ::Model& model, int frame) {
+        ::UpdateModelAnimation(model, *this, frame);
         return *this;
     }
 
