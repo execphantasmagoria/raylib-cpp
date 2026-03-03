@@ -84,8 +84,8 @@ public:
     /**
      * Update model animation mesh bone matrices (GPU skinning)
      */
-    ModelAnimation& UpdateBones(const ::Model& model, int frame) {
-        ::UpdateModelAnimationBones(model, *this, frame);
+    ModelAnimation& UpdateBones(const ::Model& animA, float frameA, const ::Model& animB, float frameB, float blend) {
+        ::UpdateModelAnimationEx(*this, animA, frameA, animB, frameB, blend);
         return *this;
     }
 
