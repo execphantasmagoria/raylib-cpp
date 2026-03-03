@@ -127,7 +127,7 @@ public:
     /**
      * Update model animation pose
      */
-    Model& UpdateAnimation(const ::ModelAnimation& anim, int frame) {
+    Model& UpdateAnimation(const ::ModelAnimation& anim, float frame) {
         ::UpdateModelAnimation(*this, anim, frame);
         return *this;
     }
@@ -135,8 +135,8 @@ public:
     /**
      * Update model animation pose
      */
-    Model& UpdateAnimationBones(const ::ModelAnimation& anim, int frame) {
-        ::UpdateModelAnimationBones(*this, anim, frame);
+    Model& UpdateAnimationsEx(const ::ModelAnimation& animA, float frameA, const ::ModelAnimation& animB, float frameB, float blend) {
+        ::UpdateModelAnimationEx(*this, animA, frameA, animB, frameB, blend);
         return *this;
     }
 
