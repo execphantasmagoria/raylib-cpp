@@ -22,9 +22,8 @@ public:
         set(other);
 
         other.boneCount = 0;
-        other.frameCount = 0;
-        other.bones = nullptr;
-        other.framePoses = nullptr;
+        other.keyframeCount = 0;
+        other.keyframePoses = nullptr;
     }
 
     ~ModelAnimation() { Unload(); }
@@ -43,9 +42,8 @@ public:
     }
 
     GETTERSETTER(int, BoneCount, boneCount)
-    GETTERSETTER(::BoneInfo*, Bones, bones)
-    GETTERSETTER(int, FrameCount, frameCount)
-    GETTERSETTER(::Transform**, FramePoses, framePoses)
+    GETTERSETTER(int, KeyframeCount, keyframeCount)
+    GETTERSETTER(::Transform**, KeyframePoses, keyframePoses)
 
     ModelAnimation& operator=(const ::ModelAnimation& model) {
         set(model);
@@ -63,9 +61,8 @@ public:
         set(other);
 
         other.boneCount = 0;
-        other.frameCount = 0;
-        other.bones = nullptr;
-        other.framePoses = nullptr;
+        other.keyframeCount = 0;
+        other.keyframePoses = nullptr;
 
         return *this;
     }
@@ -98,9 +95,8 @@ public:
 protected:
     void set(const ::ModelAnimation& model) {
         boneCount = model.boneCount;
-        frameCount = model.frameCount;
-        bones = model.bones;
-        framePoses = model.framePoses;
+        keyframeCount = model.keyframeCount;
+        keyframePoses = model.keyframePoses;
 
         // Duplicate the name. TextCopy() uses the null terminator, which we ignore here.
         for (int i = 0; i < 32; i++) {
