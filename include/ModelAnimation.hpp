@@ -13,6 +13,7 @@ namespace raylib {
  * Model animation
  */
 class ModelAnimation : public ::ModelAnimation {
+    int animCount = 0;
 public:
     ModelAnimation(const ::ModelAnimation& model) { set(model); }
 
@@ -26,16 +27,16 @@ public:
         other.keyframePoses = nullptr;
     }
 
-    // TODO: Implement a way to unload all animations at once, as the current Unload() only unloads one animation.
-    ~ModelAnimation() { Unload(1); }
+    // Unloads animation data using populated animCount field, which is set by Load() method.
+    ~ModelAnimation() { Unload(); }
 
     /**
      * Load model animations from file
      */
     static std::vector<ModelAnimation> Load(const std::string& fileName) {
-        int count = 0;
-        ::ModelAnimation* modelAnimations = ::LoadModelAnimations(fileName.c_str(), &count);
-        std::vector<ModelAnimation> mats(modelAnimations, modelAnimations + count);
+        ::ModelAnimation* modelAnimations = ::LoadModelAnimations(fileName.c_str(), &animCount);
+
+        std::vector<ModelAnimation> mats(modelAnimations, modelAnimations + animCount);
 
         RL_FREE(modelAnimations);
 
@@ -58,7 +59,7 @@ public:
             return *this;
         }
 
-        Unload(1);
+        Unload();
         set(other);
 
         other.boneCount = 0;
@@ -71,7 +72,7 @@ public:
     /**
      * Unload animation data
      */
-    void Unload(int animCount) { ::UnloadModelAnimations(this, animCount); }
+    void Unload() { ::UnloadModelAnimations(this, animCount); }
 
     /**
      * Update model animation pose
