@@ -13,7 +13,6 @@ namespace raylib {
  * Model animation
  */
 class ModelAnimation : public ::ModelAnimation {
-    int animCount = 0;
 public:
     ModelAnimation(const ::ModelAnimation& model) { set(model); }
 
@@ -34,9 +33,10 @@ public:
      * Load model animations from file
      */
     static std::vector<ModelAnimation> Load(const std::string& fileName) {
-        ::ModelAnimation* modelAnimations = ::LoadModelAnimations(fileName.c_str(), &animCount);
+        int count = 0;
+        ::ModelAnimation* modelAnimations = ::LoadModelAnimations(fileName.c_str(), &count);
 
-        std::vector<ModelAnimation> mats(modelAnimations, modelAnimations + animCount);
+        std::vector<ModelAnimation> mats(modelAnimations, modelAnimations + count);
 
         RL_FREE(modelAnimations);
 
@@ -73,28 +73,25 @@ public:
      * Unload animation data
      */
     void Unload() {
-        if(animCount <= 0) {
-            throw std::runtime_error("ModelAnimation::Unload() called on an object that was not loaded with any animations.");
-        }
-        
-        ::UnloadModelAnimations(this, animCount); 
+        ::UnloadModelAnimations(this, 1); 
     }
 
     /**
      * Update model animation pose
      */
-    ModelAnimation& Update(const ::Model& model, int frame) {
+    ModelAnimation& Update(const ::Model& model, float frame) {
         ::UpdateModelAnimation(model, *this, frame);
         return *this;
     }
 
     /**
-     * Update model animation mesh bone matrices (GPU skinning)
+     * Blend two animation poses
      */
-    ModelAnimation& UpdateBones(const ::Model& model, int frame) {
-        ::UpdateModelAnimation(model, *this, frame);
+    ModelAnimation& Blend(const ::Model& model, float frameA, const ::ModelAnimation& animB, float frameB, float blend) {
+        ::UpdateModelAnimationEx(model, *this, frameA, animB, frameB, blend);
         return *this;
     }
+
 
     /**
      * Check model animation skeleton match
