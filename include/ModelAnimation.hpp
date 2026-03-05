@@ -72,7 +72,13 @@ public:
     /**
      * Unload animation data
      */
-    void Unload() { ::UnloadModelAnimations(this, animCount); }
+    void Unload() {
+        if(animCount <= 0) {
+            throw std::runtime_error("ModelAnimation::Unload() called on an object that was not loaded with any animations.");
+        }
+        
+        ::UnloadModelAnimations(this, animCount); 
+    }
 
     /**
      * Update model animation pose
