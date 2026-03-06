@@ -76,8 +76,8 @@ public:
         ::UnloadModelAnimations(this, 1); 
     }
 
-    void Unload(int count) {
-        ::UnloadModelAnimations(this, count); 
+    static void UnloadAnimations(ModelAnimation *modelAnimation, int count) {
+        ::UnloadModelAnimations(modelAnimation, count); 
     }
 
     /**
