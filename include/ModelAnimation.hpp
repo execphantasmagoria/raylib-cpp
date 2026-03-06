@@ -76,6 +76,10 @@ public:
         ::UnloadModelAnimations(this, 1); 
     }
 
+    void Unload(int count) {
+        ::UnloadModelAnimations(this, count); 
+    }
+
     /**
      * Update model animation pose
      */
